@@ -613,28 +613,64 @@
 
         .newsletter-form input {
             width: 100%;
-            padding: 0.8rem;
-            border: 1px solid var(--color-secondary);
-            border-radius: 4px;
+            padding: 1rem;
+            border: 2px solid var(--color-secondary);
+            border-radius: 8px;
             font-size: 1rem;
-            margin-bottom: var(--spacing-sm);
+            margin-bottom: var(--spacing-md);
+            font-family: 'Montserrat', sans-serif;
+            transition: border-color 0.3s ease;
+        }
+
+        .newsletter-form input:focus {
+            outline: none;
+            border-color: var(--color-accent);
         }
 
         .newsletter-form button {
             width: 100%;
-            padding: 0.8rem;
+            padding: 1rem;
             background: var(--color-accent);
             color: white;
             border: none;
-            border-radius: 4px;
+            border-radius: 8px;
             font-size: 1rem;
             letter-spacing: 0.05em;
             cursor: pointer;
             transition: all 0.3s ease;
+            font-weight: 500;
         }
 
         .newsletter-form button:hover {
             background: var(--color-primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .form-message {
+            text-align: center;
+            margin-top: var(--spacing-md);
+            padding: var(--spacing-sm);
+            border-radius: 4px;
+            display: none;
+        }
+
+        .form-message.success {
+            display: block;
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .form-message.error {
+            display: block;
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .form-info {
+            text-align: center;
         }
 
         .social-subscribe {
@@ -1114,7 +1150,7 @@
                 Pour toute collaboration, question ou suggestion, nous serions ravis d'échanger avec vous.
             </p>
             <p style="margin-top: var(--spacing-md);">
-                <strong>Email :</strong> <a href="mailto:jyamagazinepro@gmail.com" style="color: var(--color-accent); text-decoration: none;">jyamagazinepro@gmail.com</a><br>
+                <strong>Email :</strong> <a href="/cdn-cgi/l/email-protection#066c7f676b6761677c6f686376746946616b676f6a2865696b" style="color: var(--color-accent); text-decoration: none;"><span class="__cf_email__" data-cfemail="8fe5f6eee2eee8eef5e6e1eafffde0cfe8e2eee6e3a1ece0e2">[email&#160;protected]</span></a><br>
                 <strong>Instagram :</strong> <a href="https://instagram.com/jya.mag" target="_blank" style="color: var(--color-accent); text-decoration: none;">@jya.mag</a>
             </p>
         </div>
@@ -1124,32 +1160,20 @@
     <div class="subscribe-popup" id="subscribePopup">
         <div class="popup-content">
             <button class="close-popup" id="closePopup">&times;</button>
-            <h2>Rejoignez JYA Magazine</h2>
-            <p>Choisissez comment vous souhaitez rester connecté avec nous</p>
+            <h2>Newsletter JYA Magazine</h2>
+            <p>Inscrivez-vous pour recevoir nos derniers articles, tendances et actualités mode directement dans votre boîte mail.</p>
             
-            <div class="subscribe-options">
-                <div class="subscribe-option" id="optionNewsletter">
-                    <h3>📧 Newsletter</h3>
-                    <p>Recevez nos articles par email</p>
-                </div>
-                <div class="subscribe-option" id="optionSocial">
-                    <h3>📱 Réseaux Sociaux</h3>
-                    <p>Suivez-nous en ligne</p>
-                </div>
-            </div>
+            <form class="newsletter-form active" id="newsletterForm">
+                <input type="text" id="subscribeName" placeholder="Votre prénom" required>
+                <input type="email" id="subscribeEmail" placeholder="Votre adresse email" required>
+                <button type="submit">S'abonner à la Newsletter</button>
+                <p class="form-message" id="formMessage"></p>
+            </form>
 
-            <div class="newsletter-form" id="newsletterForm">
-                <input type="email" placeholder="Votre adresse email" required>
-                <button type="submit">S'abonner</button>
-            </div>
-
-            <div class="social-subscribe" id="socialSubscribe">
-                <p>Retrouvez-nous sur nos plateformes préférées</p>
-                <div class="social-subscribe-links">
-                    <a href="https://instagram.com/jya.mag" target="_blank">Instagram</a>
-                    <a href="#" target="_blank">Pinterest</a>
-                    <a href="#" target="_blank">TikTok</a>
-                </div>
+            <div class="form-info">
+                <p style="font-size: 0.85rem; color: var(--color-text-light); margin-top: var(--spacing-md);">
+                    En vous inscrivant, vous acceptez de recevoir nos emails. Vous pouvez vous désabonner à tout moment.
+                </p>
             </div>
         </div>
     </div>
@@ -1184,12 +1208,12 @@
         </div>
     </footer>
 
+
     <script>
-        // Smooth scroll pour la navigation (seulement pour les liens internes #)
+        // Smooth scroll pour la navigation
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 const href = this.getAttribute('href');
-                // Ignorer les liens "#" vides utilisés pour les popups
                 if (href !== '#') {
                     e.preventDefault();
                     const target = document.querySelector(href);
@@ -1203,7 +1227,7 @@
             });
         });
 
-        // Animation au scroll (optionnel)
+        // Animation au scroll
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
@@ -1216,9 +1240,8 @@
                     entry.target.style.transform = 'translateY(0)';
                 }
             });
-          }, observerOptions);
+        }, observerOptions);
 
-        // Observe les éléments pour l'animation
         document.querySelectorAll('.article-card, .reportage-item, .podcast-item').forEach(el => {
             observer.observe(el);
         });
@@ -1227,10 +1250,8 @@
         const subscribePopup = document.getElementById('subscribePopup');
         const openSubscribe = document.getElementById('openSubscribe');
         const closePopup = document.getElementById('closePopup');
-        const optionNewsletter = document.getElementById('optionNewsletter');
-        const optionSocial = document.getElementById('optionSocial');
         const newsletterForm = document.getElementById('newsletterForm');
-        const socialSubscribe = document.getElementById('socialSubscribe');
+        const formMessage = document.getElementById('formMessage');
 
         // Ouvrir le popup
         openSubscribe.addEventListener('click', (e) => {
@@ -1239,26 +1260,68 @@
             document.body.style.overflow = 'hidden';
         });
 
-        // Fermer le popup
-        closePopup.addEventListener('click', () => {
+        // Fonction pour fermer le popup
+        function closeSubscribePopup() {
             subscribePopup.classList.remove('active');
             document.body.style.overflow = 'auto';
-            newsletterForm.classList.remove('active');
-            socialSubscribe.classList.remove('active');
-        });
+            if (formMessage) {
+                formMessage.style.display = 'none';
+                formMessage.className = 'form-message';
+            }
+        }
+
+        closePopup.addEventListener('click', closeSubscribePopup);
 
         // Fermer en cliquant sur le fond
         subscribePopup.addEventListener('click', (e) => {
             if (e.target === subscribePopup) {
-                subscribePopup.classList.remove('active');
-                document.body.style.overflow = 'auto';
-                newsletterForm.classList.remove('active');
-                socialSubscribe.classList.remove('active');
+                closeSubscribePopup();
             }
         });
 
-        // Option Newsletter
-        optionNewsletter.addEventListener('click', () => {
-            newsletterForm.classList.add('active');
-            socialSubscribe.classList.remove('active');
+        // Gestion du formulaire d'inscription
+        newsletterForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('subscribeName').value;
+            const email = document.getElementById('subscribeEmail').value;
+
+            // Validation
+            if (!name || !email) {
+                formMessage.textContent = 'Veuillez remplir tous les champs.';
+                formMessage.className = 'form-message error';
+                return;
+            }
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                formMessage.textContent = 'Veuillez entrer une adresse email valide.';
+                formMessage.className = 'form-message error';
+                return;
+            }
+
+            // TODO: Connecter votre service d'emailing ici
+            // Exemples: Mailchimp, Sendinblue, EmailJS, etc.
+            console.log('Nouvelle inscription:', { name, email });
+            
+            // Message de succès
+            formMessage.textContent = '✓ Merci ! Vous êtes maintenant inscrit à notre newsletter.';
+            formMessage.className = 'form-message success';
+            
+            newsletterForm.reset();
+            
+            // Fermer après 2 secondes
+            setTimeout(() => {
+                closeSubscribePopup();
+            }, 2000);
         });
+
+        // Fermer avec Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && subscribePopup.classList.contains('active')) {
+                closeSubscribePopup();
+            }
+        });
+    </script>
+</body>
+</html>
