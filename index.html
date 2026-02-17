@@ -2,7 +2,10 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="theme-color" content="#8b7355">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>JYA Magazine - Mode & Tendances</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,6 +28,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent; /* Supprime le flash bleu sur mobile */
         }
 
         body {
@@ -33,6 +37,23 @@
             background: #fff;
             line-height: 1.7;
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased; /* Meilleur rendu des polices */
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Amélioration du scroll sur mobile */
+        html {
+            scroll-behavior: smooth;
+            -webkit-text-size-adjust: 100%; /* Empêche le zoom automatique sur iOS */
+        }
+
+        /* Zones tactiles minimales pour mobile (44x44px recommandé) */
+        a, button {
+            min-height: 44px;
+            min-width: 44px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
 
         /* NAVIGATION */
@@ -800,69 +821,239 @@
         }
 
         /* RESPONSIVE */
+        
+        /* Tablettes (portrait) */
+        @media (max-width: 1024px) {
+            :root {
+                --spacing-lg: 3rem;
+                --spacing-xl: 4rem;
+            }
+
+            .hero h1 {
+                font-size: 4rem;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+            }
+
+            nav ul {
+                gap: var(--spacing-md);
+            }
+        }
+
+        /* Mobile et petites tablettes */
         @media (max-width: 768px) {
+            :root {
+                --spacing-lg: 2rem;
+                --spacing-xl: 3rem;
+            }
+
+            /* Navigation mobile */
             nav {
                 padding: var(--spacing-sm) var(--spacing-md);
             }
 
-            nav ul {
+            nav .container {
+                flex-direction: column;
                 gap: var(--spacing-sm);
+                align-items: center;
+            }
+
+            nav ul {
+                gap: var(--spacing-xs);
                 flex-wrap: wrap;
+                justify-content: center;
             }
 
             nav a {
-                font-size: 0.75rem;
+                font-size: 0.7rem;
+                padding: 0.3rem 0.5rem;
+            }
+
+            .logo {
+                font-size: 1.5rem;
+                margin-bottom: var(--spacing-xs);
             }
 
             .subscribe-btn {
                 padding: 0.5rem 1rem;
-                font-size: 0.8rem;
+                font-size: 0.75rem;
             }
 
+            /* Hero mobile */
             .hero {
-                height: 70vh;
-                margin-top: 80px;
+                height: 60vh;
+                margin-top: 120px;
+                padding: var(--spacing-md);
             }
 
             .hero h1 {
-                font-size: 3rem;
+                font-size: 2.5rem;
+                line-height: 1.2;
             }
 
             .hero p {
-                font-size: 0.9rem;
+                font-size: 0.85rem;
+                letter-spacing: 0.1em;
             }
 
+            /* Sections mobile */
             section {
                 padding: var(--spacing-lg) var(--spacing-md);
             }
 
             .section-title {
-                font-size: 2rem;
+                font-size: 1.8rem;
+                margin-bottom: var(--spacing-md);
             }
 
+            /* Articles grid mobile */
             .articles-grid {
                 grid-template-columns: 1fr;
                 gap: var(--spacing-md);
             }
 
+            .article-image {
+                height: 300px;
+            }
+
+            .article-title {
+                font-size: 1.3rem;
+            }
+
+            /* Reportages mobile */
             .reportages-container {
                 grid-template-columns: 1fr;
+                gap: var(--spacing-md);
             }
 
+            .reportage-media {
+                height: 300px;
+            }
+
+            .reportage-title {
+                font-size: 1.2rem;
+            }
+
+            /* Podcasts mobile */
             .podcasts-container {
                 grid-template-columns: 1fr;
+                gap: var(--spacing-md);
             }
 
+            .podcast-title {
+                font-size: 1.2rem;
+            }
+
+            /* About & Contact mobile */
+            .about-content {
+                padding: 0 var(--spacing-sm);
+            }
+
+            .about-content p {
+                font-size: 1rem;
+            }
+
+            /* Footer mobile */
             .footer-content {
                 grid-template-columns: 1fr;
+                gap: var(--spacing-md);
+                text-align: center;
             }
 
-            .subscribe-options {
-                grid-template-columns: 1fr;
+            .social-links {
+                justify-content: center;
+            }
+
+            /* Popup mobile */
+            .popup-content {
+                width: 95%;
+                padding: var(--spacing-md);
+                max-height: 90vh;
+                overflow-y: auto;
+            }
+
+            .popup-content h2 {
+                font-size: 1.5rem;
+            }
+
+            .newsletter-form input,
+            .newsletter-form button {
+                font-size: 0.95rem;
+            }
+        }
+
+        /* Très petits mobiles */
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 0.75rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            nav a {
+                font-size: 0.65rem;
+            }
+
+            .logo {
+                font-size: 1.3rem;
+            }
+
+            .article-title,
+            .reportage-title,
+            .podcast-title {
+                font-size: 1.1rem;
             }
 
             .popup-content {
-                padding: var(--spacing-md);
+                padding: var(--spacing-sm);
+            }
+
+            .popup-content h2 {
+                font-size: 1.3rem;
+            }
+        }
+
+        /* Grands écrans */
+        @media (min-width: 1440px) {
+            nav .container,
+            section {
+                max-width: 1600px;
+            }
+
+            .hero h1 {
+                font-size: 6rem;
+            }
+
+            .section-title {
+                font-size: 3.5rem;
+            }
+        }
+
+        /* Orientation paysage sur mobile */
+        @media (max-width: 768px) and (orientation: landscape) {
+            .hero {
+                height: 100vh;
+                margin-top: 80px;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            nav .container {
+                flex-direction: row;
+            }
+
+            nav ul {
+                flex-wrap: nowrap;
             }
         }
 
