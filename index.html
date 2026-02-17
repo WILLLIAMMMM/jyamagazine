@@ -85,7 +85,8 @@
         nav ul {
             display: flex;
             list-style: none;
-            gap: var(--spacing-lg);
+            gap: var(--spacing-md);
+            align-items: center;
         }
 
         nav a {
@@ -99,7 +100,7 @@
             position: relative;
         }
 
-        nav a:not(.logo):after {
+        nav a:not(.logo):not(.subscribe-btn):after {
             content: '';
             position: absolute;
             bottom: -5px;
@@ -110,12 +111,26 @@
             transition: width 0.3s ease;
         }
 
-        nav a:not(.logo):hover {
+        nav a:not(.logo):not(.subscribe-btn):hover {
             color: var(--color-accent);
         }
 
-        nav a:not(.logo):hover:after {
+        nav a:not(.logo):not(.subscribe-btn):hover:after {
             width: 100%;
+        }
+
+        .subscribe-btn {
+            background: var(--color-accent);
+            color: white !important;
+            padding: 0.6rem 1.5rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .subscribe-btn:hover {
+            background: var(--color-primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
 
         /* HERO SECTION */
@@ -306,66 +321,351 @@
             letter-spacing: 0.05em;
         }
 
-        /* TENDANCES SECTION */
-        .trends-container {
+        /* REPORTAGES SECTION */
+        .reportages-container {
             margin-top: var(--spacing-xl);
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: var(--spacing-md);
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
         }
 
-        .trend-item {
+        .reportage-item {
             position: relative;
-            height: 450px;
             overflow: hidden;
             cursor: pointer;
             opacity: 0;
             animation: fadeInUp 0.8s ease-out forwards;
-        }
-
-        .trend-item:nth-child(1) { animation-delay: 0.1s; }
-        .trend-item:nth-child(2) { animation-delay: 0.2s; }
-        .trend-item:nth-child(3) { animation-delay: 0.3s; }
-        .trend-item:nth-child(4) { animation-delay: 0.4s; }
-
-        .trend-image {
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Playfair Display', serif;
-            color: var(--color-text-light);
-            transition: transform 0.6s ease;
-        }
-
-        .trend-item:hover .trend-image {
-            transform: scale(1.05);
-        }
-
-        .trend-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
-            padding: var(--spacing-md);
-            color: white;
-            transform: translateY(10px);
-            opacity: 0;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
             transition: all 0.4s ease;
         }
 
-        .trend-item:hover .trend-overlay {
-            transform: translateY(0);
-            opacity: 1;
+        .reportage-item:nth-child(1) { animation-delay: 0.1s; }
+        .reportage-item:nth-child(2) { animation-delay: 0.2s; }
+        .reportage-item:nth-child(3) { animation-delay: 0.3s; }
+        .reportage-item:nth-child(4) { animation-delay: 0.4s; }
+
+        .reportage-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
         }
 
-        .trend-title {
+        .reportage-media {
+            width: 100%;
+            height: 350px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .reportage-media img,
+        .reportage-media iframe {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .reportage-item:hover .reportage-media img {
+            transform: scale(1.05);
+        }
+
+        .reportage-media.placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+            font-family: 'Playfair Display', serif;
+            color: var(--color-text-light);
+        }
+
+        .media-type-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .reportage-content {
+            padding: var(--spacing-md);
+        }
+
+        .reportage-category {
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--color-accent);
+            font-weight: 500;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .reportage-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            margin-bottom: var(--spacing-sm);
+            line-height: 1.3;
+            font-weight: 500;
+            color: var(--color-primary);
+        }
+
+        .reportage-excerpt {
+            font-size: 0.95rem;
+            color: var(--color-text-light);
+            line-height: 1.6;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .reportage-meta {
+            font-size: 0.8rem;
+            color: var(--color-text-light);
+            letter-spacing: 0.05em;
+        }
+
+        /* PODCASTS SECTION */
+        .podcasts-container {
+            margin-top: var(--spacing-xl);
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .podcast-item {
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s ease;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .podcast-item:nth-child(1) { animation-delay: 0.1s; }
+        .podcast-item:nth-child(2) { animation-delay: 0.2s; }
+        .podcast-item:nth-child(3) { animation-delay: 0.3s; }
+
+        .podcast-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .podcast-player {
+            width: 100%;
+            background: var(--color-secondary);
+        }
+
+        .podcast-player iframe {
+            width: 100%;
+            display: block;
+        }
+
+        .podcast-content {
+            padding: var(--spacing-md);
+        }
+
+        .podcast-title {
             font-family: 'Playfair Display', serif;
             font-size: 1.3rem;
             margin-bottom: var(--spacing-xs);
+            line-height: 1.3;
+            font-weight: 500;
+        }
+
+        .podcast-episode {
+            font-size: 0.85rem;
+            color: var(--color-accent);
+            letter-spacing: 0.05em;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .podcast-description {
+            font-size: 0.9rem;
+            color: var(--color-text-light);
+            line-height: 1.6;
+        }
+
+        /* POPUP ABONNEMENT */
+        .subscribe-popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .subscribe-popup.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .popup-content {
+            background: white;
+            padding: var(--spacing-lg);
+            border-radius: 12px;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            animation: slideUp 0.4s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .close-popup {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 2rem;
+            color: var(--color-text-light);
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.3s ease;
+        }
+
+        .close-popup:hover {
+            color: var(--color-primary);
+        }
+
+        .popup-content h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: var(--spacing-sm);
+            text-align: center;
+        }
+
+        .popup-content p {
+            text-align: center;
+            color: var(--color-text-light);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .subscribe-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .subscribe-option {
+            padding: var(--spacing-md);
+            border: 2px solid var(--color-secondary);
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .subscribe-option:hover {
+            border-color: var(--color-accent);
+            background: var(--color-secondary);
+        }
+
+        .subscribe-option h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .subscribe-option p {
+            font-size: 0.85rem;
+            margin-bottom: 0;
+        }
+
+        .newsletter-form {
+            display: none;
+            margin-top: var(--spacing-md);
+        }
+
+        .newsletter-form.active {
+            display: block;
+        }
+
+        .newsletter-form input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid var(--color-secondary);
+            border-radius: 4px;
+            font-size: 1rem;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .newsletter-form button {
+            width: 100%;
+            padding: 0.8rem;
+            background: var(--color-accent);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-form button:hover {
+            background: var(--color-primary);
+        }
+
+        .social-subscribe {
+            display: none;
+            text-align: center;
+            margin-top: var(--spacing-md);
+        }
+
+        .social-subscribe.active {
+            display: block;
+        }
+
+        .social-subscribe-links {
+            display: flex;
+            gap: var(--spacing-sm);
+            justify-content: center;
+            margin-top: var(--spacing-md);
+        }
+
+        .social-subscribe-links a {
+            padding: 0.8rem 1.5rem;
+            border: 2px solid var(--color-accent);
+            color: var(--color-accent);
+            text-decoration: none;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .social-subscribe-links a:hover {
+            background: var(--color-accent);
+            color: white;
         }
 
         /* ABOUT SECTION */
@@ -459,10 +759,16 @@
             }
 
             nav ul {
-                gap: var(--spacing-md);
+                gap: var(--spacing-sm);
+                flex-wrap: wrap;
             }
 
             nav a {
+                font-size: 0.75rem;
+            }
+
+            .subscribe-btn {
+                padding: 0.5rem 1rem;
                 font-size: 0.8rem;
             }
 
@@ -492,12 +798,24 @@
                 gap: var(--spacing-md);
             }
 
-            .trends-container {
+            .reportages-container {
+                grid-template-columns: 1fr;
+            }
+
+            .podcasts-container {
                 grid-template-columns: 1fr;
             }
 
             .footer-content {
                 grid-template-columns: 1fr;
+            }
+
+            .subscribe-options {
+                grid-template-columns: 1fr;
+            }
+
+            .popup-content {
+                padding: var(--spacing-md);
             }
         }
 
@@ -514,9 +832,11 @@
             <a href="#" class="logo">JYA</a>
             <ul>
                 <li><a href="#articles">Articles</a></li>
-                <li><a href="#tendances">Tendances</a></li>
+                <li><a href="#reportages">Reportages</a></li>
+                <li><a href="#podcasts">Podcasts</a></li>
                 <li><a href="#about">À Propos</a></li>
                 <li><a href="#contact">Contact</a></li>
+                <li><a href="#" class="subscribe-btn" id="openSubscribe">S'abonner</a></li>
             </ul>
         </div>
     </nav>
@@ -619,57 +939,143 @@
         </div>
     </section>
 
-    <!-- TENDANCES SECTION -->
-    <section id="tendances">
-        <h2 class="section-title">Tendances du Moment</h2>
-        <div class="trends-container">
-            <!-- Tendance 1 - REMPLACEZ LE CONTENU -->
-            <div class="trend-item">
-                <div class="trend-image">
+    <!-- REPORTAGES SECTION -->
+    <section id="reportages">
+        <h2 class="section-title">Reportages</h2>
+        <div class="reportages-container">
+            <!-- Reportage 1 - PHOTO -->
+            <article class="reportage-item">
+                <div class="reportage-media placeholder">
                     <!-- Remplacez par: <img src="votre-image.jpg" alt="Description"> -->
-                    TREND 1
+                    IMAGE REPORTAGE 1
+                    <span class="media-type-badge">Photo</span>
                 </div>
-                <div class="trend-overlay">
-                    <h3 class="trend-title">Minimalisme Raffiné</h3>
-                    <p>Less is more cette saison</p>
+                <div class="reportage-content">
+                    <div class="reportage-category">Coulisses</div>
+                    <h3 class="reportage-title">Dans les Ateliers de la Haute Couture</h3>
+                    <p class="reportage-excerpt">Plongée exclusive dans les coulisses des maisons de couture parisiennes où naissent les collections exceptionnelles.</p>
+                    <div class="reportage-meta">14 Février 2026 · 8 min</div>
                 </div>
-            </div>
+            </article>
 
-            <!-- Tendance 2 - REMPLACEZ LE CONTENU -->
-            <div class="trend-item">
-                <div class="trend-image">
-                    <!-- Remplacez par: <img src="votre-image.jpg" alt="Description"> -->
-                    TREND 2
+            <!-- Reportage 2 - VIDÉO -->
+            <article class="reportage-item">
+                <div class="reportage-media placeholder">
+                    <!-- Remplacez par: <iframe src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0" allowfullscreen></iframe> -->
+                    VIDÉO REPORTAGE 2
+                    <span class="media-type-badge">Vidéo</span>
                 </div>
-                <div class="trend-overlay">
-                    <h3 class="trend-title">Tons Naturels</h3>
-                    <p>Beige, terre, ivoire</p>
+                <div class="reportage-content">
+                    <div class="reportage-category">Défilés</div>
+                    <h3 class="reportage-title">Fashion Week : Les Moments Forts</h3>
+                    <p class="reportage-excerpt">Revivez les temps forts de la Fashion Week avec nos images exclusives des défilés les plus marquants.</p>
+                    <div class="reportage-meta">10 Février 2026 · 12 min</div>
                 </div>
-            </div>
+            </article>
 
-            <!-- Tendance 3 - REMPLACEZ LE CONTENU -->
-            <div class="trend-item">
-                <div class="trend-image">
+            <!-- Reportage 3 - PHOTO -->
+            <article class="reportage-item">
+                <div class="reportage-media placeholder">
                     <!-- Remplacez par: <img src="votre-image.jpg" alt="Description"> -->
-                    TREND 3
+                    IMAGE REPORTAGE 3
+                    <span class="media-type-badge">Photo</span>
                 </div>
-                <div class="trend-overlay">
-                    <h3 class="trend-title">Silhouettes Fluides</h3>
-                    <p>Confort et élégance</p>
+                <div class="reportage-content">
+                    <div class="reportage-category">Portrait</div>
+                    <h3 class="reportage-title">Créateurs Émergents : La Nouvelle Garde</h3>
+                    <p class="reportage-excerpt">Rencontre avec les jeunes créateurs qui réinventent les codes de la mode avec audace et créativité.</p>
+                    <div class="reportage-meta">6 Février 2026 · 10 min</div>
                 </div>
-            </div>
+            </article>
 
-            <!-- Tendance 4 - REMPLACEZ LE CONTENU -->
-            <div class="trend-item">
-                <div class="trend-image">
-                    <!-- Remplacez par: <img src="votre-image.jpg" alt="Description"> -->
-                    TREND 4
+            <!-- Reportage 4 - VIDÉO -->
+            <article class="reportage-item">
+                <div class="reportage-media placeholder">
+                    <!-- Remplacez par: <iframe src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0" allowfullscreen></iframe> -->
+                    VIDÉO REPORTAGE 4
+                    <span class="media-type-badge">Vidéo</span>
                 </div>
-                <div class="trend-overlay">
-                    <h3 class="trend-title">Matières Nobles</h3>
-                    <p>Lin, soie, coton</p>
+                <div class="reportage-content">
+                    <div class="reportage-category">Voyage</div>
+                    <h3 class="reportage-title">Tokyo Street Style : L'Art de la Rue</h3>
+                    <p class="reportage-excerpt">Exploration des quartiers branchés de Tokyo où la mode urbaine repousse les limites de la créativité.</p>
+                    <div class="reportage-meta">2 Février 2026 · 15 min</div>
                 </div>
-            </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- PODCASTS SECTION -->
+    <section id="podcasts">
+        <h2 class="section-title">Podcasts</h2>
+        <div class="podcasts-container">
+            <!-- Podcast 1 -->
+            <article class="podcast-item">
+                <div class="podcast-player">
+                    <!-- Remplacez EPISODE_ID par l'ID de votre épisode Spotify -->
+                    <!-- Pour obtenir l'ID : Allez sur Spotify > Clic droit sur l'épisode > Partager > Copier le lien de l'épisode -->
+                    <!-- L'ID est la partie après /episode/ dans l'URL -->
+                    <iframe 
+                        style="border-radius:12px" 
+                        src="https://open.spotify.com/embed/episode/EPISODE_ID_1?utm_source=generator" 
+                        width="100%" 
+                        height="232" 
+                        frameBorder="0" 
+                        allowfullscreen="" 
+                        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                        loading="lazy">
+                    </iframe>
+                </div>
+                <div class="podcast-content">
+                    <div class="podcast-episode">Épisode 12</div>
+                    <h3 class="podcast-title">L'Avenir de la Mode Durable</h3>
+                    <p class="podcast-description">Discussion avec des experts sur les innovations qui transforment l'industrie de la mode vers plus de durabilité.</p>
+                </div>
+            </article>
+
+            <!-- Podcast 2 -->
+            <article class="podcast-item">
+                <div class="podcast-player">
+                    <!-- Remplacez EPISODE_ID par l'ID de votre épisode Spotify -->
+                    <iframe 
+                        style="border-radius:12px" 
+                        src="https://open.spotify.com/embed/episode/EPISODE_ID_2?utm_source=generator" 
+                        width="100%" 
+                        height="232" 
+                        frameBorder="0" 
+                        allowfullscreen="" 
+                        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                        loading="lazy">
+                    </iframe>
+                </div>
+                <div class="podcast-content">
+                    <div class="podcast-episode">Épisode 11</div>
+                    <h3 class="podcast-title">Les Icônes de Style qui Nous Inspirent</h3>
+                    <p class="podcast-description">Retour sur les personnalités qui ont marqué l'histoire de la mode par leur style unique et intemporel.</p>
+                </div>
+            </article>
+
+            <!-- Podcast 3 -->
+            <article class="podcast-item">
+                <div class="podcast-player">
+                    <!-- Remplacez EPISODE_ID par l'ID de votre épisode Spotify -->
+                    <iframe 
+                        style="border-radius:12px" 
+                        src="https://open.spotify.com/embed/episode/EPISODE_ID_3?utm_source=generator" 
+                        width="100%" 
+                        height="232" 
+                        frameBorder="0" 
+                        allowfullscreen="" 
+                        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                        loading="lazy">
+                    </iframe>
+                </div>
+                <div class="podcast-content">
+                    <div class="podcast-episode">Épisode 10</div>
+                    <h3 class="podcast-title">Construire sa Garde-Robe Capsule</h3>
+                    <p class="podcast-description">Guide pratique pour créer une garde-robe minimaliste et polyvalente qui reflète votre personnalité.</p>
+                </div>
+            </article>
         </div>
     </section>
 
@@ -697,11 +1103,45 @@
                 Pour toute collaboration, question ou suggestion, nous serions ravis d'échanger avec vous.
             </p>
             <p style="margin-top: var(--spacing-md);">
-                <strong>Email :</strong> contact@jyamagazine.com<br>
-                <strong>Réseaux sociaux :</strong> @jyamagazine
+                <strong>Email :</strong> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="2e44574f434f494f5447404b5e5c416e49434f4742004d4143">[email&#160;protected]</a><br>
+                <strong>Instagram :</strong> @jya.mag
             </p>
         </div>
     </section>
+
+    <!-- POPUP ABONNEMENT -->
+    <div class="subscribe-popup" id="subscribePopup">
+        <div class="popup-content">
+            <button class="close-popup" id="closePopup">&times;</button>
+            <h2>Rejoignez JYA Magazine</h2>
+            <p>Choisissez comment vous souhaitez rester connecté avec nous</p>
+            
+            <div class="subscribe-options">
+                <div class="subscribe-option" id="optionNewsletter">
+                    <h3>📧 Newsletter</h3>
+                    <p>Recevez nos articles par email</p>
+                </div>
+                <div class="subscribe-option" id="optionSocial">
+                    <h3>📱 Réseaux Sociaux</h3>
+                    <p>Suivez-nous en ligne</p>
+                </div>
+            </div>
+
+            <div class="newsletter-form" id="newsletterForm">
+                <input type="email" placeholder="Votre adresse email" required>
+                <button type="submit">S'abonner</button>
+            </div>
+
+            <div class="social-subscribe" id="socialSubscribe">
+                <p>Retrouvez-nous sur nos plateformes préférées</p>
+                <div class="social-subscribe-links">
+                    <a href="https://instagram.com/jya.mag" target="_blank">Instagram</a>
+                    <a href="#" target="_blank">Pinterest</a>
+                    <a href="#" target="_blank">TikTok</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- FOOTER -->
     <footer>
@@ -710,21 +1150,22 @@
                 <h3>JYA Magazine</h3>
                 <p>Votre source d'inspiration pour une mode élégante et intemporelle.</p>
                 <div class="social-links">
-                    <a href="#" aria-label="Instagram">IG</a>
+                    <a href="https://instagram.com/jya.mag" target="_blank" aria-label="Instagram">IG</a>
                     <a href="#" aria-label="Pinterest">PI</a>
-                    <a href="#" aria-label="Twitter">TW</a>
+                    <a href="#" aria-label="TikTok">TT</a>
                 </div>
             </div>
             <div class="footer-section">
                 <h3>Navigation</h3>
                 <p><a href="#articles">Articles de mode</a></p>
-                <p><a href="#tendances">Tendances</a></p>
+                <p><a href="#reportages">Reportages</a></p>
+                <p><a href="#podcasts">Podcasts</a></p>
                 <p><a href="#about">À propos</a></p>
                 <p><a href="#contact">Contact</a></p>
             </div>
             <div class="footer-section">
-                <h3>Newsletter</h3>
-                <p>Abonnez-vous pour recevoir nos derniers articles et tendances directement dans votre boîte mail.</p>
+                <h3>Restez Connectés</h3>
+                <p>Suivez-nous sur Instagram @jya.mag pour du contenu exclusif et les dernières tendances mode.</p>
             </div>
         </div>
         <div class="footer-bottom">
@@ -732,7 +1173,7 @@
         </div>
     </footer>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         // Smooth scroll pour la navigation
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -760,12 +1201,49 @@
                     entry.target.style.transform = 'translateY(0)';
                 }
             });
-        }, observerOptions);
+          }, observerOptions);
 
         // Observe les éléments pour l'animation
-        document.querySelectorAll('.article-card, .trend-item').forEach(el => {
+        document.querySelectorAll('.article-card, .reportage-item, .podcast-item').forEach(el => {
             observer.observe(el);
         });
-    </script>
-</body>
-</html>
+
+        // Gestion du popup d'abonnement
+        const subscribePopup = document.getElementById('subscribePopup');
+        const openSubscribe = document.getElementById('openSubscribe');
+        const closePopup = document.getElementById('closePopup');
+        const optionNewsletter = document.getElementById('optionNewsletter');
+        const optionSocial = document.getElementById('optionSocial');
+        const newsletterForm = document.getElementById('newsletterForm');
+        const socialSubscribe = document.getElementById('socialSubscribe');
+
+        // Ouvrir le popup
+        openSubscribe.addEventListener('click', (e) => {
+            e.preventDefault();
+            subscribePopup.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        // Fermer le popup
+        closePopup.addEventListener('click', () => {
+            subscribePopup.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            newsletterForm.classList.remove('active');
+            socialSubscribe.classList.remove('active');
+        });
+
+        // Fermer en cliquant sur le fond
+        subscribePopup.addEventListener('click', (e) => {
+            if (e.target === subscribePopup) {
+                subscribePopup.classList.remove('active');
+                document.body.style.overflow = 'auto';
+                newsletterForm.classList.remove('active');
+                socialSubscribe.classList.remove('active');
+            }
+        });
+
+        // Option Newsletter
+        optionNewsletter.addEventListener('click', () => {
+            newsletterForm.classList.add('active');
+            socialSubscribe.classList.remove('active');
+        });
