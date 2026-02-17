@@ -171,6 +171,111 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
 
+        /* MENU HAMBURGER (caché sur desktop) */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 0.5rem;
+            background: none;
+            border: none;
+            z-index: 1001;
+            min-height: auto;
+            min-width: auto;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 2px;
+            background: var(--color-primary);
+            transition: all 0.3s ease;
+            display: block;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(7px, 7px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        /* Cacher le bouton S'abonner mobile sur desktop */
+        nav .subscribe-btn:not(.subscribe-btn:first-of-type) {
+            display: none;
+        }
+
+        /* Menu mobile coulissant */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 280px;
+            height: 100vh;
+            background: white;
+            box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            padding: 80px 2rem 2rem;
+            transition: right 0.3s ease;
+            overflow-y: auto;
+        }
+
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        .mobile-menu ul {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .mobile-menu li {
+            border-bottom: 1px solid var(--color-secondary);
+        }
+
+        .mobile-menu a {
+            display: block;
+            padding: 1rem 0;
+            color: var(--color-text);
+            text-decoration: none;
+            font-size: 1rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu a:hover {
+            color: var(--color-accent);
+            padding-left: 1rem;
+        }
+
+        /* Overlay pour fermer le menu */
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
         /* HERO SECTION */
         .hero {
             margin-top: 100px;
@@ -866,9 +971,9 @@
                 --spacing-xl: 3rem;
             }
 
-            /* Navigation mobile - VERSION ULTRA CLEAN */
+            /* Navigation mobile avec hamburger */
             nav {
-                padding: 0.8rem 1rem;
+                padding: 1rem;
             }
 
             nav .container {
@@ -879,44 +984,40 @@
             }
 
             .logo {
-                font-size: 1.3rem;
+                font-size: 1.4rem;
                 margin: 0;
+                flex: 1;
             }
 
+            /* Cacher le menu desktop sur mobile */
             nav ul {
-                gap: 0.5rem;
-                flex-wrap: nowrap;
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
-                scrollbar-width: none; /* Firefox */
-                -ms-overflow-style: none; /* IE/Edge */
-                padding: 0.2rem 0;
+                display: none !important;
             }
 
-            nav ul::-webkit-scrollbar {
-                display: none; /* Chrome/Safari */
+            /* Afficher le hamburger et le bouton S'abonner mobile */
+            .hamburger {
+                display: flex !important;
+                order: 3;
             }
 
-            nav li {
-                flex-shrink: 0;
+            /* Cacher le bouton desktop, afficher le bouton mobile */
+            nav .subscribe-btn:first-of-type {
+                display: none !important;
             }
 
-            nav a:not(.logo):not(.subscribe-btn) {
-                font-size: 0.7rem;
-                padding: 0.4rem 0.6rem;
-                white-space: nowrap;
-            }
-
-            .subscribe-btn {
-                padding: 0.5rem 0.8rem !important;
-                font-size: 0.7rem !important;
-                flex-shrink: 0;
+            nav .subscribe-btn:last-of-type {
+                display: inline-flex !important;
+                padding: 0.5rem 1rem !important;
+                font-size: 0.75rem !important;
+                order: 2;
+                min-height: auto !important;
+                min-width: auto !important;
             }
 
             /* Hero mobile */
             .hero {
                 height: 60vh;
-                margin-top: 65px;
+                margin-top: 70px;
                 padding: var(--spacing-md);
             }
 
@@ -1114,6 +1215,8 @@
     <nav>
         <div class="container">
             <a href="#" class="logo">JYA</a>
+            
+            <!-- Menu Desktop -->
             <ul>
                 <li><a href="#articles">Articles</a></li>
                 <li><a href="#reportages">Reportages</a></li>
@@ -1122,8 +1225,32 @@
                 <li><a href="#contact">Contact</a></li>
                 <li><a href="#" class="subscribe-btn" id="openSubscribe">S'abonner</a></li>
             </ul>
+
+            <!-- Bouton Hamburger (mobile) -->
+            <button class="hamburger" id="hamburger" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <!-- Bouton S'abonner (mobile) -->
+            <a href="#" class="subscribe-btn" id="openSubscribeMobile">S'abonner</a>
         </div>
     </nav>
+
+    <!-- Overlay pour fermer le menu -->
+    <div class="menu-overlay" id="menuOverlay"></div>
+
+    <!-- Menu Mobile -->
+    <div class="mobile-menu" id="mobileMenu">
+        <ul>
+            <li><a href="#articles" class="mobile-link">Articles</a></li>
+            <li><a href="#reportages" class="mobile-link">Reportages</a></li>
+            <li><a href="#podcasts" class="mobile-link">Podcasts</a></li>
+            <li><a href="#about" class="mobile-link">À Propos</a></li>
+            <li><a href="#contact" class="mobile-link">Contact</a></li>
+        </ul>
+    </div>
 
     <!-- HERO SECTION -->
     <section class="hero">
@@ -1464,6 +1591,36 @@
             });
         });
 
+        // Menu Hamburger Mobile
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const menuOverlay = document.getElementById('menuOverlay');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        // Ouvrir/Fermer le menu
+        function toggleMenu() {
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            menuOverlay.classList.toggle('active');
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : 'auto';
+        }
+
+        // Fermer le menu
+        function closeMenu() {
+            hamburger.classList.remove('active');
+            mobileMenu.classList.remove('active');
+            menuOverlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        hamburger.addEventListener('click', toggleMenu);
+        menuOverlay.addEventListener('click', closeMenu);
+
+        // Fermer le menu quand on clique sur un lien
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', closeMenu);
+        });
+
         // Animation au scroll
         const observerOptions = {
             threshold: 0.1,
@@ -1486,16 +1643,20 @@
         // Gestion du popup d'abonnement
         const subscribePopup = document.getElementById('subscribePopup');
         const openSubscribe = document.getElementById('openSubscribe');
+        const openSubscribeMobile = document.getElementById('openSubscribeMobile');
         const closePopup = document.getElementById('closePopup');
         const newsletterForm = document.getElementById('newsletterForm');
         const formMessage = document.getElementById('formMessage');
 
-        // Ouvrir le popup
-        openSubscribe.addEventListener('click', (e) => {
+        // Ouvrir le popup (desktop et mobile)
+        function openSubscribePopup(e) {
             e.preventDefault();
             subscribePopup.classList.add('active');
             document.body.style.overflow = 'hidden';
-        });
+        }
+
+        openSubscribe.addEventListener('click', openSubscribePopup);
+        openSubscribeMobile.addEventListener('click', openSubscribePopup);
 
         // Fonction pour fermer le popup
         function closeSubscribePopup() {
